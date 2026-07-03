@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-fraud-detection
+  labels:
+    app: spark-fraud-detection
+spec:
+  replicas: 1 # You can scale this up if needed, though Jupyter is usually single-user
+  selector:
+    matchLabels:
+      app: spark-fraud-detection
+  template:
+    metadata:
+      labels:
+        app: spark-fraud-detection
+    spec:
+      containers:
+      - name: jupyter-pyspark
+        image: spark-fraud-detection:latest
+        imagePullPolicy: IfNotPresent # Uses the local image you built
+        ports:
+        - containerPort: 8888
